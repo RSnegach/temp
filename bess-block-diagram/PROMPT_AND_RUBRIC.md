@@ -1,3 +1,5 @@
+<!-- ===== PLATFORM PASTE: rubric as currently entered on the platform (pre-atomization). SUPERSEDED. Replace these with the atomized criteria in the RUBRIC section further down. ===== -->
+
 Criterion 1
 Delete section
 Criterion
@@ -232,6 +234,8 @@ Assign a score from +1 to +5 reflecting the importance of this criterion:
 
 4
 Add criterion
+
+<!-- ===== CANONICAL: atomized rubric to paste into the platform, replacing the block above. ===== -->
 
 # BESS Block Diagram - Prompt and Rubric
 
