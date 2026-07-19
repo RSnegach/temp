@@ -27,7 +27,9 @@ def box(x,y,w,h,label,sub=None,fill="#FFFFFF",tcol=INK):
     c.setFillColor(tcol); c.setFont("Helvetica-Bold",9)
     c.drawCentredString(x+w/2,y+h/2+(2 if sub else -3),label)
     if sub:
-        c.setFont("Helvetica",7); c.setFillColor(GREY); c.drawCentredString(x+w/2,y+h/2-8,sub)
+        # sublabel matches the main-label color (white on the dark PCS/DCC boxes)
+        subcol = tcol if tcol!=INK else GREY
+        c.setFont("Helvetica",7); c.setFillColor(subcol); c.drawCentredString(x+w/2,y+h/2-8,sub)
 
 def line(x1,y1,x2,y2,color,wid=1.8,dash=None):
     c.setStrokeColor(color); c.setLineWidth(wid)
@@ -106,9 +108,9 @@ arrow(ac_x,stub_y,270,BLACK)
 tag(ac_x, stub_y-12, "AC-PWR", BLACK, 8, center=True)
 tag(ac_x, stub_y-22, "to AC-BUS", BLACK, 7, center=True, bold=False)
 
-# legend
-lx,ly=600,120
-c.setFillColor(HexColor("#FFF6EC")); c.setStrokeColor(HexColor("#E89B4F")); c.setLineWidth(1.0)
+# legend (lower and to the left, plain white fill with a neutral border)
+lx,ly=430,55
+c.setFillColor(HexColor("#FFFFFF")); c.setStrokeColor(HexColor("#8899AA")); c.setLineWidth(1.0)
 c.rect(lx,ly,190,110,stroke=1,fill=1)
 tag(lx+10,ly+92,"HARNESS KEY",INK,9)
 for i,(lab,col) in enumerate([("DC-PWR red",RED),("AC-PWR black",BLACK),("COMMS blue",BLUE),("AUX-24V green",GREEN)]):
