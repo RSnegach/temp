@@ -1,3 +1,238 @@
+Criterion 1
+Delete section
+Criterion
+COMMS is a daisy chain within each power block: in the connection list the K Rack BMS units chain BMS-n-1 to BMS-n-2 to BMS-n-3 to BMS-n-4, the head BMS-n-1 connects to that block's PCS, and each PCS connects to SC-01.
+218/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+4
+
+Criterion 2
+Delete section
+Criterion
+Harness edge counts in the connection list summaries are correct for the Standard build: DC-PWR 15, AC-PWR 5, COMMS 16, AUX-24V 7 (43 total).
+141/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+4
+
+Criterion 3
+Delete section
+Criterion
+DC-PWR is wired within each block only. In the connection list each Battery Rack RK-n-k connects to its own DC Combiner DCC-0n (4 per block) and each DCC-0n connects to its PCS-0n (5 DC-PWR rows per block)
+205/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+3
+
+Criterion 4
+Delete section
+Criterion
+AUX-24V feeds only active equipment: in the connection list, AUX-XFMR connects to each PCS and each DC Combiner, and to SC-01.
+126/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+3
+
+Criterion 5
+Delete section
+Criterion
+Naming and indexing are consistent across both builds. PCS-0n and DCC-0n by block, RK-n-k and BMS-n-k by block then position
+124/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+3
+
+Criterion 6
+Delete section
+Criterion
+Output is in an Excel file with six different sheets.
+53/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+4
+
+Criterion 7
+Delete section
+Criterion
+COMMS is incorrectly wired as a star. The connection list shows BMS units each connecting directly to SC-01 or to the PCS with no BMS-to-BMS chain links
+152/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+-4
+
+Criterion 8
+Delete section
+Criterion
+A harness color key/legend is present on at least one sheet in the output file.
+79/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+3
+
+Criterion 9
+Delete section
+Criterion
+The standard build sheet has exactly one each of Site Controller, Aux Transformer, MV Step-up Transformer, Revenue Metering, and AC Collection Bus, and no AC Combiner Panel row.
+177/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+5
+
+Criterion 10
+Delete section
+Criterion
+The standard build sheet has 3 PCS, 3 DC Combiner, 12 Battery Rack, 12 Rack BMS (3 power blocks x 4 racks)
+106/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+5
+
+Criterion 11
+Delete section
+Criterion
+Between the extended build sheets, the inventory totals 56 blocks
+65/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+5
+
+Criterion 12
+Delete section
+Criterion
+Between the extended build sheets, the inventory includes 1 AC Combiner Panel (AC-CMB).
+87/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+5
+
+Criterion 13
+Delete section
+Criterion
+Harness edge counts in the connection list summaries are correct for the Extended build: DC-PWR 25, AC-PWR 8, COMMS 26, AUX-24V 11 (70 total)
+141/500
+Weight
+Assign a score from +1 to +5 reflecting the importance of this criterion:
+
+- +4 to +5 Critical: core deliverable is correct and complete
+
+- +2 to +3 Important: correct structure, format, or key finding
+
+- +1 Minor: specific detail, label, or edge case handled correctly
+
+- -3 to -5 Failure Mode: critical or important failures
+
+4
+Add criterion
+
 # BESS Block Diagram - Prompt and Rubric
 
 ## PROMPT (practitioner voice, paste verbatim)
