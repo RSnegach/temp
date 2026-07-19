@@ -44,7 +44,12 @@ I need per-wafer within-wafer nonuniformity and yield, the wafer-to-wafer number
 The golden reproduces every value: 33 included sites/wafer (825 total), 1225 deduped measurements, lot mean 85.57, W2W 1.69%, lot yield 96.00% (792/825), per-wafer WIW and yields as listed, CONTINUE disposition, colored map + site detail. It commits none of the three negative failure modes. Positives all attained; negatives not triggered => ~100.
 
 ## Metadata
-- O*NET: Semiconductor Processing Technicians (51-9141.00). Tasks: operate/monitor equipment and inspect product; measure and record process data; maintain process logs and disposition material. Skills: Quality Control Analysis, Monitoring, Critical Thinking, Mathematics.
+- O*NET occupation: Semiconductor Processing Technicians (51-9141.00)
+- O*NET tasks (verbatim, one per line):
+  - Maintain processing, production, and inspection information and reports.
+  - Inspect materials, components, or products for surface defects and measure circuitry, using electronic test equipment, standard measuring instruments, or microscope.
+  - Study work orders, instructions, formulas, and processing charts to determine specifications and sequence of operations.
+- O*NET skills: Quality Control Analysis, Critical Thinking, Monitoring, Mathematics.
 - Web search allowed: No (self-contained in the four files).
 - Multimodal: Yes (a hand-drawn wafer-map reference, `Wafer_Map_Reference.png`, alongside the spreadsheet and spec documents).
 - Time estimate: 6 hours by hand (dedup ~1230 rows, apply edge exclusion by radius, compute WIW/yield for 25 wafers, W2W and lot yield, build the colored map and disposition).
