@@ -2,13 +2,13 @@
 
 ## PROMPT (practitioner voice, paste verbatim)
 
-We just pulled the Rs map on lot L7734-02 off the four-point probe and I need the uniformity and yield worked up before the shift handoff so we can call the disposition. It is the 25-wafer RTA activation lot, 49-site map per wafer.
+We just pulled the Rs map on lot L7734-02 off the four-point probe and I need the uniformity and yield worked up before the shift handoff so we can call the disposition. It is the 25-wafer RTA activation lot, 49-site map per wafer. Day shift wants the call made before they start the next lot behind it, and if this one goes on hold it changes what they run, so I would rather have the numbers right than fast.
 
-The raw export is in `L7734-02_Rs_Measurements.xlsx` (one row per site reading, coordinates in the Site_Map tab). The spec with the limits and the nonuniformity definition is `SPEC-RS-118_Rs_Specification.docx`, and the sampling and edge rules are in `SP-RS-045_Sampling_Plan.docx`. I also scanned in my site-map sketch, `Wafer_Map_Reference.png`, so you can see the ring layout and which ring sits in the edge zone.
+The raw export is in `L7734-02_Rs_Measurements.xlsx` (one row per site reading, coordinates in the Site_Map tab). The spec with the limits and the nonuniformity definition is `SPEC-RS-118_Rs_Specification.docx`, and the sampling and edge rules are in `SP-RS-045_Sampling_Plan.docx`. I also scanned in my site-map sketch, `Wafer_Map_Reference.png`, so you can see the ring layout and which ring sits in the edge zone. The three of them are meant to be read together; the export is just the readings, the limits and the rules live in the other two.
 
-Couple of things to watch, because they bite every time. A few sites got reprobed when the tool flagged contact, so there are duplicate rows for some sites; the sampling plan says how to handle those. And the outer ring is in the edge-exclusion band, so those sites are measured but do not go into the stats. Follow the plan's order of operations on both before you compute anything, or the numbers come out wrong.
+Couple of things to watch, because they bite every time. A few sites got reprobed when the tool flagged contact, so there are duplicate rows for some sites; the sampling plan says how to handle those. And the outer ring is in the edge-exclusion band, so those sites are measured but do not go into the stats. Follow the plan's order of operations on both before you compute anything, or the numbers come out wrong, and it is easy to do them in the wrong order and not notice. Use the nonuniformity definition the spec calls out and not whatever the tool software reports, since they are not the same thing.
 
-I need per-wafer within-wafer nonuniformity and yield, the wafer-to-wafer number, the lot yield, and a straight CONTINUE or HOLD against the acceptance criteria in the spec. Give me a colored wafer map for a representative wafer so I can eyeball the signature. Output as `L7734-02_Wafer_Analysis.xlsx` with a lot summary, the per-wafer table, the wafer map, and the per-site detail for the mapped wafer.
+I need per-wafer within-wafer nonuniformity and yield, the wafer-to-wafer number, the lot yield, and a straight CONTINUE or HOLD against the acceptance criteria in the spec. Give me a colored wafer map for a representative wafer so I can eyeball the signature and see whether it is center-to-edge or something more random. Output as `L7734-02_Wafer_Analysis.xlsx` with a lot summary, the per-wafer table, the wafer map, and the per-site detail for the mapped wafer.
 
 ---
 
