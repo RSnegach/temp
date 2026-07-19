@@ -1,26 +1,36 @@
-# LPQ-482 Test Design Package
+# Task Design Portfolio
 
-Test-suite-design task for the LoanPreQual decision service: derive a full
-functional test suite from a feature specification, a decision-rules workbook,
-a field-validation reference, and a hand-drawn decision-flow graph.
+Professional-workflow task packages, one folder per project. Each complete task
+provides input files, a golden solution, a scoring rubric, and the deterministic
+generator scripts that produce them.
 
-## Contents
+## Projects
 
-| Path | What it is |
-|------|------------|
-| `inputs/LPQ-482_Feature_Specification.docx` | Feature spec: behaviour, outcomes, acceptance criteria |
-| `inputs/LPQ-482-RULES_Decision_Rules.xlsx` | Ordered 7-rule decision engine, thresholds, operators |
-| `inputs/LPQ-482-VAL_Field_Validation_Reference.docx` | Field ranges, enums, validation order |
-| `inputs/LPQ-482-FLOW_Decision_Flow_Graph.pdf` | Reference for the hand-drawn decision-flow graph |
-| `golden/LPQ-482_Test_Suite.xlsx` | Golden test suite: 63 cases across EP, BVA, DT, DB, PATH |
-| `PROMPT_AND_RUBRIC.md` | Prompt, scoring rubric, metadata |
-| `flow_preview.png` | Rendered preview of the decision-flow graph |
-| `*.py` | Deterministic generators for the suite and input artifacts |
-| `LPQ-482_TestDesign_Inputs.zip` | Packaged input files |
-| `LPQ-482_Test_Suite_golden.zip` | Packaged golden deliverable |
+| Folder | Occupation | Task | Status |
+|--------|------------|------|--------|
+| [`software-qa-loanprequal/`](software-qa-loanprequal/) | Software QA Analysts & Testers | Derive a functional test suite for a loan pre-qualification decision service (EP, BVA, decision-table, decision-flow path coverage) | Complete |
+| [`semiconductor-wafer-uniformity/`](semiconductor-wafer-uniformity/) | Semiconductor Processing Technicians | Compute wafer-map sheet-resistance uniformity, yield, and lot disposition from a 25-wafer, 49-site metrology export | Complete |
+| [`bess-block-diagram-WIP/`](bess-block-diagram-WIP/) | (n/a) | Synthesize a two-configuration BESS block diagram from verbal specs and a partial sketch | Incomplete (work in progress) |
 
-## Regenerating
+## Layout of a project folder
 
-The policy engine and case generator live in `suite.py`; the input and golden
-artifacts are built by the `build_*.py` scripts. Run `python suite.py` to print
-the deterministic case counts and full case list.
+```
+<project>/
+  README.md              project overview, the analytical spine, key numbers
+  PROMPT_AND_RUBRIC.md    the prompt, scoring rubric, and O*NET metadata
+  inputs/                 input files handed to the solver
+  golden/                 the golden solution deliverable
+  scripts/                deterministic generators (source of truth for all numbers)
+  previews/               PNG renders of any hand-drawn or visual artifact
+  *.zip                   packaged input and golden bundles
+```
+
+Each project's `scripts/` folder contains a single engine module that computes
+every number in the golden; the golden is generated from it, so the two always
+agree. Run the engine module directly to print the locked figures.
+
+## Note on hand-drawn inputs
+
+Some tasks include a hand-drawn input (a decision-flow graph, a wafer map). The
+repo ships a clean reference render under `previews/`; the final submission uses
+a redrawn, photographed version in place of the reference.
