@@ -165,17 +165,18 @@ ws4["A1"]=f"Site Detail - W{REP:02d}"; ws4["A1"].font=TF
 ws4["A2"]=("Per-site Rs for the mapped wafer. Radius, included flag, bin, and in-spec are computed live from the "
            "coordinates and the Rs reading against the spec limits. Excluded sites are not in the wafer statistics.")
 ws4["A2"].font=SF; ws4.merge_cells("A2:H2"); ws4.row_dimensions[2].height=28
-# spec constants block (so formulas reference cells, not magic numbers)
-ws4["J4"]="constants"; ws4["J4"].font=SF
+# spec constants block (so formulas reference cells, not magic numbers).
+# Placed at K/L, clear of the helper column I.
+ws4["K4"]="constants"; ws4["K4"].font=SF
 consts=[("LSL",W.RS_LSL),("USL",W.RS_USL),("warn_lo",W.RS_WARN_LO),
         ("warn_hi",W.RS_WARN_HI),("excl_r",W.EXCL_RADIUS)]
 crow={}
 for i,(nm,val) in enumerate(consts):
     rr=5+i
-    ws4.cell(rr,10,nm).font=MONO
-    cc=ws4.cell(rr,11,val); cc.font=MONO; cc.number_format="0.00"
-    crow[nm]=f"$K${rr}"
-hdr(ws4,4,["Site","x_mm","y_mm","Radius mm","Rs ohm/sq","Included","Bin","In spec"])
+    ws4.cell(rr,11,nm).font=MONO
+    cc=ws4.cell(rr,12,val); cc.font=MONO; cc.number_format="0.00"
+    crow[nm]=f"$L${rr}"
+hdr(ws4,4,["Site","x_mm","y_mm","Radius mm","Rs ohm/sq","Included","Bin","In spec","Rs (incl only)"])
 r=5
 for s in W.SITES:
     rs=site_rs[s["site"]]
@@ -204,11 +205,17 @@ for s in W.SITES:
     # In spec (live)
     live.set(ws4, f"H{r}", f'=IF(F{r}="N","-",IF(AND(E{r}>={crow["LSL"]},E{r}<={crow["USL"]}),"Y","N"))',
              inspec, kind="str", font=MONO, align=Alignment(horizontal="center"))
-    for col in range(1,9): ws4.cell(r,col).border=B; ws4.cell(r,col).alignment=Alignment(horizontal="center")
+    # helper: Rs for included sites only, blank otherwise (feeds MIN/MAX/AVERAGE,
+    # which are legacy functions that work in every Excel; avoids MINIFS/MAXIFS
+    # which openpyxl writes without the _xlfn prefix Excel needs -> #NAME?)
+    live.set(ws4, f"I{r}", f'=IF(F{r}="Y",E{r},"")', (rs if incl else ""),
+             kind=("num" if incl else "str"), dp=2, number_format="0.00",
+             font=MONO, align=Alignment(horizontal="center"))
+    for col in range(1,10): ws4.cell(r,col).border=B; ws4.cell(r,col).alignment=Alignment(horizontal="center")
     r+=1
 last_site_row=r-1
-for col,w in zip("ABCDEFGH",[7,9,9,11,11,10,8,9]): ws4.column_dimensions[col].width=w
-ws4.column_dimensions["J"].width=10; ws4.column_dimensions["K"].width=9
+for col,w in zip("ABCDEFGHI",[7,9,9,11,11,10,8,9,12]): ws4.column_dimensions[col].width=w
+ws4.column_dimensions["K"].width=10; ws4.column_dimensions["L"].width=9
 ws4.freeze_panes="A5"
 
 # live wafer-stat block on Site_Detail, computed over INCLUDED sites (F="Y")
@@ -216,12 +223,14 @@ sr=last_site_row+2
 ws4.cell(sr,1,f"W{REP:02d} statistics (included sites, live)").font=BF
 ws4.merge_cells(start_row=sr,start_column=1,end_row=sr,end_column=4)
 repx=lot["wafers"][REP-1]
-E_rng=f"E5:E{last_site_row}"; F_rng=f"F5:F{last_site_row}"
+F_rng=f"F5:F{last_site_row}"; I_rng=f"I5:I{last_site_row}"
+# MIN/MAX/AVERAGE over the included-only helper column I (blanks ignored).
+# These are legacy functions, so no _xlfn prefix issue and they work everywhere.
 stat_defs=[
  ("Included site count", f'=COUNTIF({F_rng},"Y")', repx["n"], "int", 0, "0"),
- ("Mean Rs", f'=ROUND(AVERAGEIF({F_rng},"Y",{E_rng}),2)', repx["mean"], "num", 2, "0.00"),
- ("Min Rs", f'=ROUND(MINIFS({E_rng},{F_rng},"Y"),2)', repx["min"], "num", 2, "0.00"),
- ("Max Rs", f'=ROUND(MAXIFS({E_rng},{F_rng},"Y"),2)', repx["max"], "num", 2, "0.00"),
+ ("Mean Rs", f'=ROUND(AVERAGE({I_rng}),2)', repx["mean"], "num", 2, "0.00"),
+ ("Min Rs", f'=ROUND(MIN({I_rng}),2)', repx["min"], "num", 2, "0.00"),
+ ("Max Rs", f'=ROUND(MAX({I_rng}),2)', repx["max"], "num", 2, "0.00"),
 ]
 for i,(lab,formula,cached,kind,dp,fmt) in enumerate(stat_defs):
     rr=sr+1+i
