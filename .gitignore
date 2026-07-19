@@ -13,3 +13,7 @@ Thumbs.db
 
 # transient
 *.tmp
+
+# Office temp/lock files
+~$*
+.~lock.*
