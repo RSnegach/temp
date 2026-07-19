@@ -19,7 +19,7 @@ c=canvas.Canvas("inputs/SP-RS-045_Wafer_Map_Reference.pdf", pagesize=letter)
 # frame + title
 c.setStrokeColor(NAVY); c.setLineWidth(1.4); c.rect(24,24,W_PT-48,H_PT-48)
 c.setFillColor(NAVY); c.setFont("Helvetica-Bold",14); c.drawString(40,H_PT-52,"49-SITE Rs WAFER MAP  (SP-RS-045)")
-c.setFillColor(GREY); c.setFont("Helvetica",9); c.drawString(40,H_PT-68,"150 mm wafer, notch at bottom. Site layout reference only - no values.")
+c.setFillColor(GREY); c.setFont("Helvetica",9); c.drawString(40,H_PT-68,"150 mm wafer, notch at bottom. Site layout reference.")
 
 # wafer circle centered (sized to leave a clear band below for the legends)
 cx,cy=W_PT/2, 500
