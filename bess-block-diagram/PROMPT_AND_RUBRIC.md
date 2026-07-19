@@ -14,7 +14,9 @@ Give it back as `bess_block_diagram.xlsx`. Put the standard build on one sheet a
 
 ## RUBRIC (weights in the numeric field only)
 
-**+5 (critical)** — Standard build has the correct block inventory (Std_Inventory sheet): 35 blocks total, counts of 1 each for Site Controller, Aux Transformer, MV Step-up Transformer, Revenue Metering, AC Collection Bus, plus 3 PCS, 3 DC Combiner, 12 Battery Rack, 12 Rack BMS, and no AC Combiner Panel row. Correct check: the Std_Inventory counts match and total 35.
+**+2 (critical)** — Standard build site section (Std_Inventory sheet): exactly one each of Site Controller, Aux Transformer, MV Step-up Transformer, Revenue Metering, and AC Collection Bus, and no AC Combiner Panel row. Correct check: those 5 site counts are 1 and AC-CMB is absent.
+
+**+3 (critical)** — Standard build per-block equipment (Std_Inventory sheet): 3 PCS, 3 DC Combiner, 12 Battery Rack, 12 Rack BMS (3 power blocks x 4 racks). Correct check: these four counts, and the inventory totals 35 blocks.
 
 **+5 (critical)** — Extended build applies the AC bus-feeder exception (Ext_Inventory + Ext_Connections sheets): the inventory includes 1 AC Combiner Panel (AC-CMB) and totals 56 blocks; the connection list shows PCS-01/02/03 to AC-BUS, PCS-04 and PCS-05 to AC-CMB (not AC-BUS), and one AC-CMB to AC-BUS row. Correct check: those AC-PWR rows are present. A linear scale-up (no AC-CMB row, all 5 PCS to AC-BUS) is wrong.
 
