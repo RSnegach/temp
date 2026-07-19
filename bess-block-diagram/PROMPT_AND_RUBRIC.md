@@ -249,31 +249,55 @@ Give it back as `bess_block_diagram.xlsx`. Put the standard build on one sheet a
 
 ## RUBRIC (weights in the numeric field only)
 
-**+2 (critical)** — Standard build site section (Std_Inventory sheet): exactly one each of Site Controller, Aux Transformer, MV Step-up Transformer, Revenue Metering, and AC Collection Bus, and no AC Combiner Panel row. Correct check: those 5 site counts are 1 and AC-CMB is absent.
+Each criterion is atomic (one independently-scorable check). Edge-count criteria state the derivation from the wiring rules, not a bare golden-only number.
 
-**+3 (critical)** — Standard build per-block equipment (Std_Inventory sheet): 3 PCS, 3 DC Combiner, 12 Battery Rack, 12 Rack BMS (3 power blocks x 4 racks). Correct check: these four counts, and the inventory totals 35 blocks.
+Standard build site section (Std_Inventory):
+**+1** Exactly one Site Controller (SC-01).
+**+1** Exactly one Aux Transformer (AUX-XFMR).
+**+1** Exactly one MV Step-up Transformer (MV-XFMR).
+**+1** Exactly one Revenue Metering (MTR-01).
+**+1** Exactly one AC Collection Bus (AC-BUS).
+**+2** Standard build has no AC Combiner Panel.
 
-**+5 (critical)** — Extended build applies the AC bus-feeder exception (Ext_Inventory + Ext_Connections sheets): the inventory includes 1 AC Combiner Panel (AC-CMB) and totals 56 blocks; the connection list shows PCS-01/02/03 to AC-BUS, PCS-04 and PCS-05 to AC-CMB (not AC-BUS), and one AC-CMB to AC-BUS row. Correct check: those AC-PWR rows are present. A linear scale-up (no AC-CMB row, all 5 PCS to AC-BUS) is wrong.
+Standard build per-block equipment (Std_Inventory):
+**+1** 3 PCS.
+**+1** 3 DC Combiner.
+**+1** 12 Battery Rack.
+**+1** 12 Rack BMS.
 
-**+4 (critical)** — COMMS is a daisy chain within each power block: in the connection list the K Rack BMS units chain BMS-n-1 to BMS-n-2 to BMS-n-3 to BMS-n-4 (3 links per block), the head BMS-n-1 connects to that block's PCS, and each PCS connects to SC-01. Correct check: COMMS rows show BMS-to-BMS chain links, not every BMS wired to SC-01 or to the PCS.
+Extended build (Ext_Inventory + Ext_Connections):
+**+5** Ext_Inventory includes exactly 1 AC Combiner Panel (AC-CMB).
+**+3** Ext_Inventory totals 56 blocks.
+**+4** AC bus-feeder exception wired correctly: connection list shows PCS-01, PCS-02, PCS-03 to AC-BUS, PCS-04 and PCS-05 to AC-CMB (not AC-BUS), and one AC-CMB to AC-BUS row.
 
-**+4 (critical)** — Harness edge counts in the connection-list summaries are correct. Standard build: DC-PWR 15, AC-PWR 5, COMMS 16, AUX-24V 7 (43 total). Extended build: DC-PWR 25, AC-PWR 8, COMMS 26, AUX-24V 11 (70 total). Correct check: these eight per-harness counts on the Std and Ext connection sheets.
+COMMS (Std/Ext connection lists):
+**+3** Within each power block the 4 Rack BMS form a daisy chain BMS-n-1 to BMS-n-2 to BMS-n-3 to BMS-n-4 (3 BMS-to-BMS links per block).
+**+2** The head BMS-n-1 of each power block connects to that block's PCS-0n.
+**+2** Each PCS-0n connects to SC-01 (one COMMS uplink per block).
 
-**+3 (important)** — DC-PWR is wired within each block only: in the connection list each Battery Rack RK-n-k connects to its own DC Combiner DCC-0n (4 per block) and each DCC-0n connects to its PCS-0n (5 DC-PWR rows per block). Correct check: no DC-PWR row crosses blocks (e.g. RK-1-k to DCC-02) or reaches a site block.
+DC-PWR (connection lists):
+**+2** Every DC-PWR link stays within one power block (no link to another block or to a site block).
+**+2** Each Battery Rack RK-n-k connects to its own block's DC Combiner DCC-0n (4 per block).
+**+1** Each DC Combiner DCC-0n connects to its own block's PCS-0n (1 per block).
 
-**+3 (important)** — AUX-24V feeds only active equipment: in the connection list, AUX-XFMR connects to each PCS and each DC Combiner (2 per block) and to SC-01. Standard build shows exactly 7 AUX-24V rows (3 PCS + 3 DCC + SC-01). Correct check: no AUX-24V row targets a Rack, BMS, AC-BUS, Metering, MV-XFMR, or AC-CMB.
+AUX-24V (connection lists):
+**+1** AUX-XFMR connects to each PCS (one per block).
+**+1** AUX-XFMR connects to each DC Combiner (one per block).
+**+1** AUX-XFMR connects to SC-01 (one site link).
 
-**+3 (important)** — Site-level blocks and links exist once, not per power block: the inventory shows count 1 for AC-BUS, Metering, and MV-XFMR; the connection list has single rows AC-BUS to MTR-01, MTR-01 to MV-XFMR (AC-PWR), MTR-01 to SC-01 (COMMS), and AUX-XFMR to SC-01 (AUX-24V). Correct check: none of these site items or links are duplicated per power block.
+Edge counts (derived from the wiring rules, not golden-only):
+**+4** Standard-build harness edge totals match the rule derivation: DC-PWR 15 = 3 x (4 rack-to-DCC + 1 DCC-to-PCS); AC-PWR 5 = 3 PCS feeders + AC-BUS-to-MTR + MTR-to-MV; COMMS 16 = 3 x (3 BMS chain + 1 head-to-PCS + 1 PCS-to-SC) + 1 MTR-to-SC; AUX-24V 7 = 3 x 2 + 1 SC. 43 total.
+**+4** Extended-build harness edge totals match the rule derivation: DC-PWR 25 = 5 x 5; AC-PWR 8 = 3 PCS-to-AC-BUS + 2 PCS-to-AC-CMB + AC-CMB-to-AC-BUS + AC-BUS-to-MTR + MTR-to-MV; COMMS 26 = 5 x 5 + 1 MTR-to-SC; AUX-24V 11 = 5 x 2 + 1 SC. 70 total.
 
-**+3 (important)** — Naming and indexing are consistent across both builds: PCS-0n and DCC-0n by block, RK-n-k and BMS-n-k by block then position (e.g. RK-3-2, BMS-5-4). Correct check: tags follow this scheme with no off-by-one.
+Structure and naming:
+**+3** Naming and indexing consistent across both builds: PCS-0n / DCC-0n by block, RK-n-k / BMS-n-k by block then position (e.g. RK-3-2, BMS-5-4), no off-by-one.
+**+2** Output is one Excel file with the six sheets (two diagrams, two inventories, two connection lists).
+**+2** A harness color key/legend is present on at least one sheet (DC-PWR red, AC-PWR black, COMMS blue, AUX-24V green).
 
-**+2 (minor)** — Both builds are on separate sheets, each block is a labeled box, each connection is a line colored and tagged by harness family (DC-PWR red, AC-PWR black, COMMS blue, AUX-24V green), and a harness color key is present. Correct check: two sheets, colored tagged lines, legend.
-
-**-5 (negative)** — Extended build treated as a linear scale-up: no AC Combiner Panel in Ext_Inventory and the connection list shows all 5 PCS to AC-BUS, giving AC-PWR 10 instead of 8. Correct check: flag if the AC-CMB row is missing or PCS-04/PCS-05 connect to AC-BUS.
-
-**-4 (negative)** — COMMS wired as a star: the connection list shows BMS units each connecting directly to SC-01 or to the PCS with no BMS-to-BMS chain links. Correct check: flag when BMS-to-BMS links are absent (a correct build has 3 BMS-to-BMS chain links per power block).
-
-**-3 (negative)** — Aux over-fed (racks or BMS given an AUX-24V connection) or site-level items duplicated per power block. Correct check: flag either.
+Failure modes:
+**-4** COMMS wired as a star: BMS units each connect directly to SC-01 or to the PCS with no BMS-to-BMS chain links (a correct build has 3 BMS-to-BMS links per power block).
+**-5** Extended build treated as a linear scale-up: no AC-CMB row and all 5 PCS connect to AC-BUS.
+**-3** AUX-24V feeds a Rack or BMS (aux over-fed), or any site-level block or link is duplicated per power block.
 
 ---
 
