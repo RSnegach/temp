@@ -7,6 +7,9 @@ import wafer as W
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
+from xlsx_live import LiveCells, normalize_decimals, set_excel_fingerprint
+
+live = LiveCells()
 
 NAVY="15324B"; WHITE="FFFFFF"; LT="EAF0F4"
 PASS_F="C9E6D4"; WARN_F="FBE8C8"; FAIL_F="F5CBC6"; EXCL_F="D9D9D9"; RESULT="E4EEF3"
@@ -50,22 +53,39 @@ rowsL=[
  ("Failing site measurements", f"{lot['total_sites']-lot['total_pass']}", "", ""),
 ]
 r=5
+verd_rows={}   # metric label -> row, for live verdict formulas
 for metric,val,crit,verd in rowsL:
     ws.cell(r,1,metric).font=BF if r==5 else CF
     ws.cell(r,2,val).font=CF
     ws.cell(r,3,crit).font=SF
-    vc=ws.cell(r,4,verd); vc.font=BF
-    if verd=="PASS": vc.fill=PatternFill("solid",fgColor=PASS_F)
-    elif verd=="FAIL": vc.fill=PatternFill("solid",fgColor=FAIL_F)
+    if verd:
+        # LIVE verdict: compare the numeric part of this row's value cell to the threshold
+        vc=ws.cell(r,4); vc.font=BF
+        if metric.startswith("Wafer-to-wafer"):
+            live.set(ws,f"D{r}",'=IF(VALUE(LEFT(B{0},FIND(" ",B{0}&" ")-1))<=3,"PASS","FAIL")'.format(r),
+                     verd, kind="str", font=BF, align=Alignment(vertical="center"))
+        elif metric.startswith("Max WIW"):
+            live.set(ws,f"D{r}",f'=IF(VALUE(B{r})<=5,"PASS","FAIL")', verd, kind="str",
+                     font=BF, align=Alignment(vertical="center"))
+        elif metric.startswith("Lot yield"):
+            live.set(ws,f"D{r}",'=IF(VALUE(LEFT(B{0},FIND(" ",B{0}&" ")-1))>=95,"PASS","FAIL")'.format(r),
+                     verd, kind="str", font=BF, align=Alignment(vertical="center"))
+        if verd=="PASS": vc.fill=PatternFill("solid",fgColor=PASS_F)
+        elif verd=="FAIL": vc.fill=PatternFill("solid",fgColor=FAIL_F)
+        verd_rows[metric]=r
     for col in range(1,5): ws.cell(r,col).border=B; ws.cell(r,col).alignment=Alignment(vertical="center")
     r+=1
-# overall disposition
+# overall disposition (live): CONTINUE only if all three verdict cells say PASS
 overall = "CONTINUE" if (crit_lot_yield_pass and w2w_pass and not wiw_fail) else "HOLD"
-ws.cell(r+1,1,"Lot disposition").font=RF
-dc=ws.cell(r+1,2,overall); dc.font=RF
-dc.fill=PatternFill("solid",fgColor=PASS_F if overall=="CONTINUE" else FAIL_F)
-ws.cell(r+1,3, "meets all 3 criteria" if overall=="CONTINUE" else "misses >=1 criterion").font=SF
-for col in range(1,4): ws.cell(r+1,col).border=B
+dr=r+1
+ws.cell(dr,1,"Lot disposition").font=RF
+w2w_r=verd_rows["Wafer-to-wafer W2W (%)"]; wiw_r=verd_rows["Max WIW nonuniformity (%)"]; yld_r=verd_rows["Lot yield (included sites in spec)"]
+live.set(ws, f"B{dr}",
+         f'=IF(AND(D{w2w_r}="PASS",D{wiw_r}="PASS",D{yld_r}="PASS"),"CONTINUE","HOLD")',
+         overall, kind="str", font=RF, align=Alignment(vertical="center"),
+         fill=PatternFill("solid",fgColor=PASS_F if overall=="CONTINUE" else FAIL_F))
+ws.cell(dr,3, "meets all 3 criteria" if overall=="CONTINUE" else "misses >=1 criterion").font=SF
+for col in range(1,4): ws.cell(dr,col).border=B
 for col,w in zip("ABCD",[34,16,20,10]): ws.column_dimensions[col].width=w
 ws.freeze_panes="A5"
 
@@ -138,11 +158,24 @@ ws3.cell(lr-1,2,f"W{REP:02d} mean {lot['wafers'][REP-1]['mean']:.2f}  WIW {lot['
                 f"yield {lot['wafers'][REP-1]['yield_pct']:.1f}%").font=BF
 
 # ---------- Site_Detail (rep wafer, per included/excluded site) ----------
+# LIVE cells: radius from x/y; Included from radius vs exclusion threshold;
+# Bin and In-spec derived from the Rs cell against the spec limits.
 ws4=wb.create_sheet("Site_Detail")
 ws4["A1"]=f"Site Detail - W{REP:02d}"; ws4["A1"].font=TF
-ws4["A2"]="Per-site Rs for the mapped wafer, with radius, included flag, and bin. Excluded sites are not in the wafer statistics."
-ws4["A2"].font=SF; ws4.merge_cells("A2:F2")
-hdr(ws4,4,["Site","Radius mm","Rs ohm/sq","Included","Bin","In spec"])
+ws4["A2"]=("Per-site Rs for the mapped wafer. Radius, included flag, bin, and in-spec are computed live from the "
+           "coordinates and the Rs reading against the spec limits. Excluded sites are not in the wafer statistics.")
+ws4["A2"].font=SF; ws4.merge_cells("A2:H2"); ws4.row_dimensions[2].height=28
+# spec constants block (so formulas reference cells, not magic numbers)
+ws4["J4"]="constants"; ws4["J4"].font=SF
+consts=[("LSL",W.RS_LSL),("USL",W.RS_USL),("warn_lo",W.RS_WARN_LO),
+        ("warn_hi",W.RS_WARN_HI),("excl_r",W.EXCL_RADIUS)]
+crow={}
+for i,(nm,val) in enumerate(consts):
+    rr=5+i
+    ws4.cell(rr,10,nm).font=MONO
+    cc=ws4.cell(rr,11,val); cc.font=MONO; cc.number_format="0.00"
+    crow[nm]=f"$K${rr}"
+hdr(ws4,4,["Site","x_mm","y_mm","Radius mm","Rs ohm/sq","Included","Bin","In spec"])
 r=5
 for s in W.SITES:
     rs=site_rs[s["site"]]
@@ -150,20 +183,72 @@ for s in W.SITES:
     b = "-" if not incl else W.bin_of(rs)
     inspec = "-" if not incl else ("Y" if (W.RS_LSL<=rs<=W.RS_USL) else "N")
     ws4.cell(r,1,s["site"]).font=MONO
-    ws4.cell(r,2,s["r"]).font=MONO; ws4.cell(r,2).number_format="0.0"
-    cc=ws4.cell(r,3,rs); cc.font=MONO; cc.number_format="0.00"
-    ws4.cell(r,4,"Y" if incl else "N").font=MONO
-    bc=ws4.cell(r,5,b); bc.font=MONO
+    ws4.cell(r,2,s["x"]).font=MONO; ws4.cell(r,2).number_format="0.00"
+    ws4.cell(r,3,s["y"]).font=MONO; ws4.cell(r,3).number_format="0.00"
+    # radius (live)
+    live.set(ws4, f"D{r}", f"=ROUND(SQRT(B{r}^2+C{r}^2),2)", s["r"], kind="num", dp=2,
+             number_format="0.00", font=MONO, align=Alignment(horizontal="center"))
+    # Rs literal (raw measurement)
+    cc=ws4.cell(r,5,rs); cc.font=MONO; cc.number_format="0.00"; cc.alignment=Alignment(horizontal="center")
+    # Included (live): radius <= exclusion threshold
+    live.set(ws4, f"F{r}", f'=IF(D{r}<={crow["excl_r"]},"Y","N")', "Y" if incl else "N",
+             kind="str", font=MONO, align=Alignment(horizontal="center"))
+    # Bin (live): only for included sites
+    bin_formula=(f'=IF(F{r}="N","-",'
+                 f'IF(OR(E{r}<{crow["LSL"]},E{r}>{crow["USL"]}),"FAIL",'
+                 f'IF(OR(E{r}<{crow["warn_lo"]},E{r}>{crow["warn_hi"]}),"WARN","PASS")))')
+    bc=live.set(ws4, f"G{r}", bin_formula, b, kind="str", font=MONO,
+                align=Alignment(horizontal="center"))
     if incl: bc.fill=PatternFill("solid",fgColor={"PASS":PASS_F,"WARN":WARN_F,"FAIL":FAIL_F}[b])
     else: bc.fill=PatternFill("solid",fgColor=EXCL_F)
-    ws4.cell(r,6,inspec).font=MONO
-    for col in range(1,7): ws4.cell(r,col).border=B; ws4.cell(r,col).alignment=Alignment(horizontal="center")
+    # In spec (live)
+    live.set(ws4, f"H{r}", f'=IF(F{r}="N","-",IF(AND(E{r}>={crow["LSL"]},E{r}<={crow["USL"]}),"Y","N"))',
+             inspec, kind="str", font=MONO, align=Alignment(horizontal="center"))
+    for col in range(1,9): ws4.cell(r,col).border=B; ws4.cell(r,col).alignment=Alignment(horizontal="center")
     r+=1
-for col,w in zip("ABCDEF",[7,11,11,10,8,9]): ws4.column_dimensions[col].width=w
+last_site_row=r-1
+for col,w in zip("ABCDEFGH",[7,9,9,11,11,10,8,9]): ws4.column_dimensions[col].width=w
+ws4.column_dimensions["J"].width=10; ws4.column_dimensions["K"].width=9
 ws4.freeze_panes="A5"
+
+# live wafer-stat block on Site_Detail, computed over INCLUDED sites (F="Y")
+sr=last_site_row+2
+ws4.cell(sr,1,f"W{REP:02d} statistics (included sites, live)").font=BF
+ws4.merge_cells(start_row=sr,start_column=1,end_row=sr,end_column=4)
+repx=lot["wafers"][REP-1]
+E_rng=f"E5:E{last_site_row}"; F_rng=f"F5:F{last_site_row}"
+stat_defs=[
+ ("Included site count", f'=COUNTIF({F_rng},"Y")', repx["n"], "int", 0, "0"),
+ ("Mean Rs", f'=ROUND(AVERAGEIF({F_rng},"Y",{E_rng}),2)', repx["mean"], "num", 2, "0.00"),
+ ("Min Rs", f'=ROUND(MINIFS({E_rng},{F_rng},"Y"),2)', repx["min"], "num", 2, "0.00"),
+ ("Max Rs", f'=ROUND(MAXIFS({E_rng},{F_rng},"Y"),2)', repx["max"], "num", 2, "0.00"),
+]
+for i,(lab,formula,cached,kind,dp,fmt) in enumerate(stat_defs):
+    rr=sr+1+i
+    ws4.cell(rr,1,lab).font=CF
+    live.set(ws4, f"C{rr}", formula, cached, kind=kind, dp=dp, number_format=fmt,
+             font=MONO, align=Alignment(horizontal="center"))
+    for col in (1,2,3): ws4.cell(rr,col).border=B
+# WIW NU from the min/max/mean cells above (live, references the stat cells)
+mean_c=f"C{sr+2}"; min_c=f"C{sr+3}"; max_c=f"C{sr+4}"
+rr=sr+5
+ws4.cell(rr,1,"WIW NU %").font=CF
+live.set(ws4, f"C{rr}", f"=ROUND(({max_c}-{min_c})/(2*{mean_c})*100,2)", repx["wiw"],
+         kind="num", dp=2, number_format="0.00", font=MONO, align=Alignment(horizontal="center"))
+for col in (1,2,3): ws4.cell(rr,col).border=B
+# yield (live)
+rr=sr+6
+ws4.cell(rr,1,"Yield % (in spec / included)").font=CF
+live.set(ws4, f"C{rr}", f'=ROUND(COUNTIF({"H5:H"+str(last_site_row)},"Y")/COUNTIF({F_rng},"Y")*100,1)',
+         repx["yield_pct"], kind="num", dp=1, number_format="0.0", font=MONO,
+         align=Alignment(horizontal="center"))
+for col in (1,2,3): ws4.cell(rr,col).border=B
 
 wb.properties.creator="Metrology"; wb.properties.title="Lot L7734-02 Wafer Analysis"; wb.properties.lastModifiedBy="Metrology"
 out="golden/L7734-02_Wafer_Analysis.xlsx"; wb.save(out)
-print("saved",out)
+nc,nf=live.inject(out)
+normalize_decimals(out)   # strip binary float tails from all stored values
+set_excel_fingerprint(out)
+print("saved",out,f"| live cells {nc} across {nf} sheet(s)")
 print(f"lot yield {lot['lot_yield']:.2f}%  W2W {lot['w2w_pct']:.2f}%  max WIW {max(x['wiw'] for x in lot['wafers']):.2f}%  disposition {overall}")
 print(f"wafers with fails: {[x['wafer'] for x in lot['wafers'] if x['n_fail']>0]}")

@@ -5,6 +5,9 @@ import wafer as W
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
+from xlsx_live import LiveCells, normalize_decimals, set_excel_fingerprint
+
+live = LiveCells()
 
 NAVY="15324B"; WHITE="FFFFFF"; LT="EAF0F4"
 thin=Side(style="thin",color="C3CDD6"); B=Border(left=thin,right=thin,top=thin,bottom=thin)
@@ -55,13 +58,18 @@ ws2["A2"]=("Nominal probe coordinates for the 49-site pattern, wafer center at o
            "ring index increases outward. Radius is distance from wafer center. See the sampling plan for the "
            "measurement pattern and any exclusion rule.")
 ws2["A2"].font=SF; ws2.merge_cells("A2:E2"); ws2.row_dimensions[2].height=30
+# radius_mm is a LIVE cell: distance from center computed from x and y.
+# Pure geometry, reveals nothing about exclusion or dedup.
+ws2["A3"]="radius_mm is computed from the site coordinates (=ROUND(SQRT(x^2+y^2),2))."
+ws2["A3"].font=SF; ws2.merge_cells("A3:E3")
 hdr(ws2,4,["site","x_mm","y_mm","radius_mm","ring_index"])
 r=5
 for s in W.SITES:
     ws2.cell(r,1,s["site"]).font=MONO
-    ws2.cell(r,2,s["x"]).font=MONO
-    ws2.cell(r,3,s["y"]).font=MONO
-    ws2.cell(r,4,s["r"]).font=MONO
+    ws2.cell(r,2,s["x"]).font=MONO; ws2.cell(r,2).number_format="0.00"
+    ws2.cell(r,3,s["y"]).font=MONO; ws2.cell(r,3).number_format="0.00"
+    live.set(ws2, f"D{r}", f"=ROUND(SQRT(B{r}^2+C{r}^2),2)", s["r"], kind="num", dp=2,
+             number_format="0.00", font=MONO, align=Alignment(horizontal="center"))
     ws2.cell(r,5,s["ring"]).font=MONO
     for col in range(1,6):
         cc=ws2.cell(r,col); cc.border=B; cc.alignment=Alignment(horizontal="center")
@@ -71,4 +79,8 @@ for col,w in zip("ABCDE",[7,9,9,11,11]): ws2.column_dimensions[col].width=w
 ws2.freeze_panes="A5"
 
 wb.properties.creator="Metrology"; wb.properties.title="Rs Measurement Export L7734-02"; wb.properties.lastModifiedBy="Metrology"
-out="inputs/L7734-02_Rs_Measurements.xlsx"; wb.save(out); print("saved",out,"rows",len(rows_sorted))
+out="inputs/L7734-02_Rs_Measurements.xlsx"; wb.save(out)
+nc,nf=live.inject(out)
+normalize_decimals(out)   # strip binary float tails from all stored values
+set_excel_fingerprint(out)
+print("saved",out,"rows",len(rows_sorted),f"| live cells {nc} across {nf} sheet(s)")
