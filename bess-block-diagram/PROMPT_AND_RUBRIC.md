@@ -8,7 +8,7 @@ I can't hand you a marked-up drawing because that's exactly what I need produced
 
 Watch the interconnect schedule carefully on two things. The comms inside a block is a daisy chain, not a home run to the controller. And the AC collection on the larger build does not just scale up one for one, there's a rule about the bus feeder count that changes how the upper blocks reach the bus. Read it and apply it.
 
-Give it back as `bess_block_diagram.xlsx` with the standard build on one sheet and the extended build on another. Draw each block as a labeled box, each connection as a line tagged and colored by its harness family, and add the harness color key. I want to be able to count blocks and trace every harness from this drawing.
+Give it back as `bess_block_diagram.xlsx`. Put the standard build on one sheet and the extended build on another: each block a labeled box, each connection a line tagged and colored by its harness family, plus the harness color key. Then, so the shop can check the drawing against a takeoff, add a block inventory and a connection list for each build (from block, to block, harness family, one row per connection) on their own tabs. I want to be able to count blocks and trace every harness both from the drawing and from the lists.
 
 ---
 
@@ -18,13 +18,13 @@ Give it back as `bess_block_diagram.xlsx` with the standard build on one sheet a
 
 **+5 (critical)** — Extended build applies the AC bus-feeder exception: 56 blocks including 1 AC Combiner Panel (AC-CMB); power blocks 1-3 feed the AC bus directly and blocks 4-5 feed the AC-CMB, which makes one feeder to the bus. Correct check: AC-CMB present, PCS-04 and PCS-05 connect to AC-CMB not the bus, AC-CMB connects to AC-BUS. A linear 5/3 scale-up (no AC-CMB, all 5 PCS on the bus) is wrong.
 
-**+4 (critical)** — COMMS is a daisy chain within each power block: the K Rack BMS units chain BMS-n-1 to BMS-n-2 to ... to BMS-n-4, the head BMS-n-1 connects to that block's PCS, and each PCS home-runs to the Site Controller. Correct check: BMS units are chained, not each wired to the controller. A star of all BMS to the controller is wrong.
+**+4 (critical)** — COMMS is a daisy chain within each power block: in the connection list the K Rack BMS units chain BMS-n-1 to BMS-n-2 to BMS-n-3 to BMS-n-4 (3 links per block), the head BMS-n-1 connects to that block's PCS, and each PCS connects to SC-01. Correct check: COMMS rows show BMS-to-BMS chain links, not every BMS wired to SC-01 or to the PCS.
 
-**+4 (critical)** — Harness edge counts are correct per build. Standard: DC-PWR 15, AC-PWR 5, COMMS 16, AUX-24V 7 (43 total). Extended: DC-PWR 25, AC-PWR 8, COMMS 26, AUX-24V 11 (70 total). Correct check: these eight counts.
+**+4 (critical)** — Harness edge counts in the connection-list summaries are correct. Standard build: DC-PWR 15, AC-PWR 5, COMMS 16, AUX-24V 7 (43 total). Extended build: DC-PWR 25, AC-PWR 8, COMMS 26, AUX-24V 11 (70 total). Correct check: these eight per-harness counts on the Std and Ext connection sheets.
 
 **+3 (important)** — DC-PWR is wired within each block only: each Battery Rack home-runs to its block's DC Combiner (star of 4), and each DC Combiner feeds its block's PCS. Per block that is 5 DC links. Correct check: rack-to-DCC star plus DCC-to-PCS, no DC crossing between blocks or to the site.
 
-**+3 (important)** — AUX-24V feeds only the active equipment: the Aux Transformer feeds each PCS and each DC Combiner (2 per block) and the Site Controller (1 site-level). Correct check: racks and BMS are NOT aux-fed, AC bus/metering/MV transformer/AC-CMB are NOT aux-fed.
+**+3 (important)** — AUX-24V feeds only active equipment: in the connection list, AUX-XFMR connects to each PCS and each DC Combiner (2 per block) and to SC-01. Standard build shows exactly 7 AUX-24V rows (3 PCS + 3 DCC + SC-01). Correct check: no AUX-24V row targets a Rack, BMS, AC-BUS, Metering, MV-XFMR, or AC-CMB.
 
 **+3 (important)** — Site-level blocks and links exist once, not per power block: one AC-BUS, one Metering, one MV-XFMR, with AC-BUS to Metering to MV-XFMR, Metering home-runs COMMS to the Site Controller, and Aux Transformer feeds the Site Controller. Correct check: these are single site-level items, not duplicated per block.
 
@@ -34,14 +34,14 @@ Give it back as `bess_block_diagram.xlsx` with the standard build on one sheet a
 
 **-5 (negative)** — Extended build drawn as a linear scale-up: no AC Combiner Panel and all 5 PCS landed on the AC bus directly, giving AC-PWR 10 instead of 8. Correct check: flag if AC-CMB missing or PCS-04/05 wired to the bus.
 
-**-4 (negative)** — COMMS drawn as a star (every BMS wired to the Site Controller or to the PCS) instead of an intra-block daisy chain. Correct check: flag if BMS units are not chained.
+**-4 (negative)** — COMMS wired as a star: the connection list shows BMS units each connecting directly to SC-01 or to the PCS with no BMS-to-BMS chain links. Correct check: flag when BMS-to-BMS links are absent (a correct build has 3 BMS-to-BMS chain links per power block).
 
 **-3 (negative)** — Aux over-fed (racks or BMS given an AUX-24V connection) or site-level items duplicated per power block. Correct check: flag either.
 
 ---
 
 ## Golden scores 100 against this rubric
-The golden `bess_block_diagram.xlsx` reproduces both inventories (35 / 56 blocks) and all eight edge counts (15/5/16/7 and 25/8/26/11), applies the AC-CMB exception, draws the comms daisy chain, restricts aux feeds, keeps site items singular, and names everything consistently. It commits none of the three negative failure modes.
+The golden `bess_block_diagram.xlsx` has two diagram sheets plus an inventory and connection list per build. The inventories give 35 / 56 blocks and the connection-list summaries give all eight edge counts (15/5/16/7 and 25/8/26/11). The connection lists make the daisy-chain, the AC-CMB exception, the aux-feed restriction, and the single site-level items directly checkable. It commits none of the three negative failure modes.
 
 ## Metadata
 - O*NET occupation: Electrical and Electronics Drafters (17-3012.00)

@@ -16,13 +16,13 @@ I need per-wafer within-wafer nonuniformity and yield, the wafer-to-wafer number
 
 **+5 (critical)** — Edge exclusion applied correctly: the 16 outer-ring sites with radius > 72.0 mm (site IDs 34-49) are excluded from all statistics; each wafer's stats are computed over exactly 33 included sites. Correct check: n_included = 33 per wafer, 825 included site-measurements across the lot.
 
-**+5 (critical)** — Lot disposition is CONTINUE, derived from all three criteria passing: lot yield 96.00% (>= 95%), W2W 1.69% (<= 3%), and every wafer's WIW NU <= 5.0%. Correct check: verdict CONTINUE with those three supporting values.
+**+5 (critical)** — Lot disposition is CONTINUE, derived from all three criteria passing: lot yield 96.00% (>= 95%), W2W 1.68% (<= 3%), and every wafer's WIW NU <= 5.0%. Correct check: verdict CONTINUE with those three supporting values.
 
 **+4 (critical)** — Within-wafer nonuniformity uses the pinned half-range formula (max - min)/(2 x mean) x 100, not a sigma/mean definition. Spot values: W01 = 3.68%, W07 = 4.08%, W13 = 4.25%, W24 = 3.61%. Correct check: these match; the sigma/mean method (which would give W01 ~2.48%) is not used.
 
-**+4 (critical)** — Retest reconciliation applied: for the 5 reprobed sites (W03/site15, W07/site28, W12/site5, W19/site33, W22/site20) only the latest-timestamp reading is kept; the earlier high readings are dropped. Correct check: deduped to 1225 site-measurements total; the superseded originals (each ~6.5 ohm/sq higher) do not appear in any statistic.
+**+4 (critical)** — Retest reconciliation is evident in the golden Raw_Data sheet: it holds exactly 1225 rows (one per wafer-site, 25 x 49), not the 1230 rows of the raw export. The 5 reprobed sites (W03/site15, W07/site28, W12/site5, W19/site33, W22/site20) show only their later reading in Raw_Data (Rs 85.47, 88.9, 83.4, 86.72, 84.51 respectively), and the earlier high readings do not appear. Correct check: Raw_Data row count = 1225 and those five Rs values match.
 
-**+3 (important)** — Lot mean Rs = 85.57 ohm/sq and W2W = 1.69%, both computed over included sites and per-wafer means. Correct check: these two values.
+**+3 (important)** — Lot mean Rs = 85.57 ohm/sq and W2W = 1.68%, both computed over included sites and per-wafer means. Correct check: these two values.
 
 **+3 (important)** — Lot yield = 96.00% (792 of 825 included site-measurements within the 80.75 to 89.25 ohm/sq spec). Correct check: 792/825.
 
@@ -41,7 +41,7 @@ I need per-wafer within-wafer nonuniformity and yield, the wafer-to-wafer number
 ---
 
 ## Golden scores 100 against this rubric
-The golden reproduces every value: 33 included sites/wafer (825 total), 1225 deduped measurements, lot mean 85.57, W2W 1.69%, lot yield 96.00% (792/825), per-wafer WIW and yields as listed, CONTINUE disposition, colored map + site detail. It commits none of the three negative failure modes. Positives all attained; negatives not triggered => ~100.
+The golden reproduces every value: 33 included sites/wafer (825 total), 1225 deduped measurements, lot mean 85.57, W2W 1.68%, lot yield 96.00% (792/825), per-wafer WIW and yields as listed, CONTINUE disposition, colored map + site detail. It commits none of the three negative failure modes. Positives all attained; negatives not triggered => ~100.
 
 ## Metadata
 - O*NET occupation: Semiconductor Processing Technicians (51-9141.00)
