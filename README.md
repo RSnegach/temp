@@ -10,7 +10,7 @@ generator scripts that produce them.
 |--------|------------|------|--------|
 | [`software-qa-loanprequal/`](software-qa-loanprequal/) | Software QA Analysts & Testers | Derive a functional test suite for a loan pre-qualification decision service (EP, BVA, decision-table, decision-flow path coverage) | Complete |
 | [`semiconductor-wafer-uniformity/`](semiconductor-wafer-uniformity/) | Semiconductor Processing Technicians | Compute wafer-map sheet-resistance uniformity, yield, and lot disposition from a 25-wafer, 49-site metrology export | Complete |
-| [`bess-block-diagram-WIP/`](bess-block-diagram-WIP/) | (n/a) | Synthesize a two-configuration BESS block diagram from verbal specs and a partial sketch | Incomplete (work in progress) |
+| [`bess-block-diagram/`](bess-block-diagram/) | Electrical and Electronics Drafters | Synthesize a two-configuration BESS block diagram in Excel from verbal specs and a one-block wiring reference | Complete |
 
 ## Layout of a project folder
 

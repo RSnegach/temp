@@ -89,7 +89,8 @@ def build_grid(n_blocks):
     has_cmb = n_blocks>T.BUS_FEEDER_POSITIONS
 
     # ---- power block clusters (top to bottom) ----
-    first_cluster_r=6
+    # start clusters a few rows down so the top band stays clear for the legend
+    first_cluster_r=9
     pcs_rows={}; dcc_rows={}; pcs_anchor={}
     for n in range(1,n_blocks+1):
         cr=first_cluster_r+(n-1)*(cluster_h+cluster_gap)
@@ -240,23 +241,86 @@ def render_png(g, path, title):
     for lb in g.labels:
         if not lb["text"]: continue
         d.text((cx(lb["c"]),cy(lb["r"])-1), lb["text"], fill=hx(lb["color"]), font=font(11,True))
-    # legend
-    lx=Wpx-230; ly=padT+6
-    d.rectangle([lx,ly,lx+210,ly+96], fill=hx("FFF6EC"), outline=hx("E89B4F"), width=1)
-    d.text((lx+10,ly+6),"HARNESS KEY",fill=(17,17,17),font=font(12,True))
-    for i,(k,lab) in enumerate([("DC-PWR","DC-PWR (red)"),("AC-PWR","AC-PWR (black)"),
-                                 ("COMMS","COMMS (blue)"),("AUX-24V","AUX-24V (green)")]):
-        yy=ly+28+i*17
-        d.rectangle([lx+12,yy,lx+40,yy+8], fill=hx(COL[k]))
-        d.text((lx+48,yy-3),lab,fill=(17,17,17),font=font(11))
+    # legend (top-right, in the clear band above the first cluster; the top two
+    # grid rows are empty so it never overlaps a block)
+    lx=Wpx-232; ly=padT+2
+    d.rectangle([lx,ly,lx+214,ly+30], fill=hx("FFF6EC"), outline=hx("E89B4F"), width=1)
+    d.text((lx+8,ly+4),"HARNESS KEY", fill=(17,17,17), font=font(10,True))
+    for i,(k,lab) in enumerate([("DC-PWR","DC-PWR"),("AC-PWR","AC-PWR"),
+                                 ("COMMS","COMMS"),("AUX-24V","AUX-24V")]):
+        xx=lx+8+i*54
+        d.rectangle([xx,ly+20,xx+14,ly+27], fill=hx(COL[k]))
+        d.text((xx+16,ly+18),lab,fill=(17,17,17),font=font(7))
     img.save(path)
     print("saved", path, img.size)
 
 
+# ============================ XLSX emitter ============================
+def emit_xlsx(grids, path):
+    """grids: list of (title, Grid). Blocks -> merged colored cells, lines ->
+    colored fill cells, labels -> colored text. Legend row under the diagram."""
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+    from openpyxl.utils import get_column_letter
+    thin=Side(style="thin",color="8899AA")
+    wb=Workbook(); first=True
+    for title, g in grids:
+        ws = wb.active if first else wb.create_sheet()
+        first=False
+        ws.title = title
+        # uniform small cells so 1-cell lines read thin against multi-cell blocks
+        for c in range(1, g.maxc+3):
+            ws.column_dimensions[get_column_letter(c)].width = 2.4
+        for r in range(1, g.maxr+3):
+            ws.row_dimensions[r].height = 9.0
+        # lines first (so block borders sit on top)
+        for (r,c),col in g.lines.items():
+            cell=ws.cell(row=r+1, column=c+1)
+            cell.fill=PatternFill("solid", fgColor=col)
+        # blocks: merge range, fill, centered label, box border
+        for b in g.blocks:
+            r0,c0,r1,c1=b["r0"]+1,b["c0"]+1,b["r1"]+1,b["c1"]+1
+            ws.merge_cells(start_row=r0,start_column=c0,end_row=r1,end_column=c1)
+            fill=BLOCK_FILL[b["type"]]
+            tcol="FFFFFF" if b["type"] in BLOCK_TEXT_LIGHT else "111111"
+            tl=ws.cell(row=r0,column=c0, value=b["label"])
+            tl.fill=PatternFill("solid",fgColor=fill)
+            tl.font=Font(name="Calibri",size=8,bold=True,color=tcol)
+            tl.alignment=Alignment(horizontal="center",vertical="center")
+            blkfill=PatternFill("solid",fgColor=fill)
+            for rr in range(r0,r1+1):
+                for cc in range(c0,c1+1):
+                    cell=ws.cell(row=rr,column=cc)
+                    cell.fill=blkfill
+                    cell.border=Border(top=thin,left=thin,right=thin,bottom=thin)
+        # harness labels as colored text
+        for lb in g.labels:
+            if not lb["text"]: continue
+            cell=ws.cell(row=lb["r"]+1, column=lb["c"]+1, value=lb["text"])
+            cell.font=Font(name="Calibri",size=7,bold=True,color=lb["color"])
+        # legend row under the diagram
+        lr=g.maxr+3
+        ws.cell(row=lr,column=2,value="HARNESS KEY").font=Font(name="Calibri",size=9,bold=True)
+        for i,(k,lab) in enumerate([("DC-PWR","DC-PWR"),("AC-PWR","AC-PWR"),
+                                     ("COMMS","COMMS"),("AUX-24V","AUX-24V")]):
+            swc=2+i*6
+            sw=ws.cell(row=lr+1,column=swc); sw.fill=PatternFill("solid",fgColor=COL[k])
+            ws.cell(row=lr+1,column=swc+1,value=lab).font=Font(name="Calibri",size=8,color=COL[k],bold=True)
+    wb.properties.creator="Electrical Drafting"
+    wb.properties.lastModifiedBy="Electrical Drafting"
+    wb.properties.title="BESS Block Diagram"
+    wb.save(path)
+    print("saved", path)
+
+
 if __name__ == "__main__":
+    from xlsx_live import normalize_decimals, set_excel_fingerprint
     gA,_=build_grid(T.STANDARD_BLOCKS)
     render_png(gA,"preview_standard.png","BESS Block Diagram - Standard Build (3 power blocks)")
     gB,_=build_grid(T.EXTENDED_BLOCKS)
     render_png(gB,"preview_extended.png","BESS Block Diagram - Extended Build (5 power blocks)")
+    out="golden/bess_block_diagram.xlsx"
+    emit_xlsx([("Standard_3_Block",gA),("Extended_5_Block",gB)], out)
+    normalize_decimals(out); set_excel_fingerprint(out, creator="Electrical Drafting")
     print("standard grid:", gA.maxr,"x",gA.maxc, "blocks", len(gA.blocks))
     print("extended grid:", gB.maxr,"x",gB.maxc, "blocks", len(gB.blocks))
