@@ -83,8 +83,8 @@ tag(chain+6, (ys[1]+ys[2])/2+rh/2, "COMMS", BLUE, 8)
 tag(bms_x-6, ys[0]+rh+30, "COMMS  BMS daisy chain, head BMS to PCS", BLUE, 8)
 
 # Three site stubs drop to the bottom in three separate lanes so labels do not
-# collide: AUX-24V at x=70, COMMS at x=150, AC-PWR at x=300.
-aux_x=70; comms_x=150; ac_x=300; stub_y=160
+# collide. COMMS runs left out of the PCS then turns down like the AUX lane.
+aux_x=60; comms_x=110; ac_x=300; stub_y=160
 
 # AUX-24V (green): stubs into PCS and DCC, then down its own lane
 line(pcs[0], pcs[1]+pcs[3]/2, aux_x, pcs[1]+pcs[3]/2, GREEN, dash=(4,3))
@@ -94,12 +94,14 @@ arrow(aux_x,stub_y,270,GREEN)
 tag(aux_x, stub_y-12, "AUX-24V", GREEN, 8, center=True)
 tag(aux_x, stub_y-22, "from AUX-XFMR", GREEN, 7, center=True, bold=False)
 
-# COMMS (blue): from PCS left edge down its own lane to Site Controller
+# COMMS (blue): out the PCS left edge, run left, then turn down its own lane.
+# Tip sits lower than the AUX lane so the two labels never collide.
+comms_y=stub_y-46
 line(pcs[0], pcs[1]+8, comms_x, pcs[1]+8, BLUE)
-line(comms_x, pcs[1]+8, comms_x, stub_y, BLUE)
-arrow(comms_x,stub_y,270,BLUE)
-tag(comms_x, stub_y-12, "COMMS", BLUE, 8, center=True)
-tag(comms_x, stub_y-22, "to Site Controller", BLUE, 7, center=True, bold=False)
+line(comms_x, pcs[1]+8, comms_x, comms_y, BLUE)
+arrow(comms_x,comms_y,270,BLUE)
+tag(comms_x, comms_y-12, "COMMS", BLUE, 8, center=True)
+tag(comms_x, comms_y-22, "to Site Controller", BLUE, 7, center=True, bold=False)
 
 # AC-PWR (black): from PCS right edge down its own lane to AC-BUS
 line(pcs[0]+pcs[2], pcs[1]+pcs[3]-10, ac_x, pcs[1]+pcs[3]-10, BLACK)
