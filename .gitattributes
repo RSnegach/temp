@@ -1,0 +1,9 @@
+# Treat Office docs, PDFs, images, and archives as binary (no EOL conversion)
+*.xlsx binary
+*.docx binary
+*.pptx binary
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.zip   binary
