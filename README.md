@@ -12,6 +12,7 @@ generator scripts that produce them.
 | [`semiconductor-wafer-uniformity/`](semiconductor-wafer-uniformity/) | Semiconductor Processing Technicians | Compute wafer-map sheet-resistance uniformity, yield, and lot disposition from a 25-wafer, 49-site metrology export | Complete |
 | [`bess-block-diagram/`](bess-block-diagram/) | Electrical and Electronics Drafters | Synthesize a two-configuration BESS block diagram in Excel from verbal specs and a one-block wiring reference | Complete |
 | [`automotive-dfmea/`](automotive-dfmea/) | Automotive Engineers | Score and rank a fuel-delivery Design FMEA by AIAG-VDA Action Priority from a ratings reference and a working failure-mode register | Complete |
+| [`gdt-mrb-disposition/`](gdt-mrb-disposition/) | Automotive Engineers | Disposition a machined bracket first article (ACCEPT / MRB / reject) from a GD&T drawing, a CMM report, and a disposition procedure, applying MMC bonus, datum shift, and a size-first rule | Complete |
 
 ## Layout of a project folder
 
