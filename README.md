@@ -13,6 +13,9 @@ generator scripts that produce them.
 | [`bess-block-diagram/`](bess-block-diagram/) | Electrical and Electronics Drafters | Synthesize a two-configuration BESS block diagram in Excel from verbal specs and a one-block wiring reference | Complete |
 | [`automotive-dfmea/`](automotive-dfmea/) | Automotive Engineers | Score and rank a fuel-delivery Design FMEA by AIAG-VDA Action Priority from a ratings reference and a working failure-mode register | Complete |
 | [`gdt-mrb-disposition/`](gdt-mrb-disposition/) | Automotive Engineers | Disposition a machined bracket first article (ACCEPT / MRB / reject) from a GD&T drawing, a CMM report, and a disposition procedure, applying MMC bonus, datum shift, and a size-first rule | Complete |
+| [`survey-traverse-closure/`](survey-traverse-closure/) | Surveyors | Reduce and adjust a closed boundary traverse from a field-book page (mixed bearing/deflection/slope conventions), Bowditch adjustment, coordinates, and parcel area | Complete |
+| [`contract-obligation-register/`](contract-obligation-register/) | Paralegals & Legal Assistants | Build a 2025 deadline calendar from a services agreement, amendment, and exhibit: supersession, conditionals, a chained deadline, and calendar/business-day date math | Complete |
+| [`accounting-month-end-close/`](accounting-month-end-close/) | Accountants & Auditors | Close the month from a raw general ledger: foot the TB, diagnose a transposition, post adjusting entries, reconcile the bank, and produce an adjusted trial balance | Complete |
 
 ## Layout of a project folder
 
