@@ -1,0 +1,369 @@
+Section 1: Task Instructions
+
+Section Goal: Evaluate whether the instructions, workflow, and requested deliverable are clear, logical, and feasible.
+
+Task Instructions Realism
+Are the Task Instructions realistic for a professional in the listed domain?
+Pease skip the task and inform a Snorkel admin if you are not familiar with the listed domain/sector.
+
+
+
+Yes
+
+
+No
+Task Instructions Realism Rationale
+Provide a rationale for why the instructions are unrealistic. If applicable, suggest the correct domain/occupation or the changes needed to make the instructions domain-appropriate.
+
+Input field text
+Goal & Context Clarity
+Do the Task Instructions clearly state the goal and enough context to begin, without requiring unstated assumptions?
+
+
+
+Yes
+
+
+No
+Goal & Context Clarity Rationale
+Detail what is unclear, incomplete, or assumed. Suggest specific edits to improve usability.
+
+Input field text
+Procedure in Task Instructions
+Do the Task Instructions prescribe a step-by-step procedure?
+
+
+
+Yes
+
+
+No
+Procedure in Task Instructions Rationale
+Identify the procedural language that should be removed or rewritten so the instructions state the goal and context only (not how to complete the task).
+
+Input field text
+Correct Deliverable Definition
+Based on the Task Instructions alone, is it clear what a completed deliverable would be for this task?
+
+
+
+Yes
+
+
+No
+Deliverable Definition Revision
+What is underspecified about the deliverable? Provide details on what is unclear below such as the resultant artifact type, where the deliverable should be stored, required contents/fields of the deliverable.
+
+Input field text
+Instruction Quality
+Rate the quality of the task instructions as though you received this request from a colleague. (Refer to the Rating Task Quality in guidelines)
+
+
+
+5 - Excellent
+
+
+
+4 - Good
+
+
+
+3 - Fair
+
+
+
+2 - Poor
+
+
+
+1 - Invalid / Does Not Make Sense
+
+Next section
+
+Section 2: Rubrics and Weights
+
+Section Goal: Verify that the golden solution and evaluation rubric accurately assess task completion.
+
+Rubric Weightings
+The rubric can be found in the Rubric and Weights table within the task. It lists rubric categories with descriptions and % weights. Do you agree with the relative weightings presented there? That is, in your assessment, do these relative weightings correctly reflect the relative importance of each category to the task?
+
+
+
+Yes
+
+
+No
+Rubric Weighting Adjustment(s)
+What would you change about the weightings? Be specific: indicate which category or categories should be weighted differently, and provide a more appropriate weighting. For example, which category should be rated higher or lower, and to what degree - somewhat higher/lower, or much higher/lower?
+
+Input field text
+Unnecessary and Missing Rubric Categories
+Are any listed rubric categories unnecessary for judging successful completion, or are any important parts of successful task completion missing from the rubric?
+
+
+
+No changes needed
+
+
+
+Remove only
+
+
+
+Add only
+
+
+
+Both remove and add
+
+Unnecessary and Missing Rubric Category Rationale
+Which categories should be removed or added, and why?
+
+Input field text
+Rubric Category Structure
+Should any rubric categories be split or merged so that scoring better matches how the work is actually done?
+
+
+
+Yes
+
+
+No
+Rubric Category Structure Rationale
+Which categories should be split or merged, and how?
+
+Input field text
+Rubric Category Descriptions
+Are the rubric category descriptions clear and specific enough to understand what successful completion looks like for each category?
+
+
+
+Yes
+
+
+No
+Rubric Category Descriptions Rationale
+Which descriptions are unclear or too vague, and how should they be revised?
+
+Input field text
+Rubric ↔ Task Instructions Alignment
+Does the set of rubric categories match what the Task Instructions ask the agent to produce or accomplish?
+
+
+
+Yes
+
+
+No
+Rubric ↔ Task Instructions Alignment Rationale
+What do the Task Instructions require that the rubric does not score, or what does the rubric score that the Task Instructions do not ask for?
+
+Input field text
+
+Previous section
+Next section
+
+Section 3: Resources for Completion
+
+Section Goal: Verify that the task includes the appropriate domain, applications, files, and other resources needed for successful completion.
+
+Applications & Tools
+Are the listed applications suitable and sufficient for completing the deliverable? Answer "No" if any necessary applications are missing from the list. Following this, for each application you will assess whether it is appropriate and required for the task.
+
+
+
+Yes
+
+
+No
+Application List Rationale
+Explain why the listed applications are insufficient, and suggest which application(s) should be added and for what reason.
+
+Input field text
+
+Applications used: app 1
+Odoo Community - Procurement ERP — draft RFQ creation, vendor/product/price lookup
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Applications used: app 2
+Google Chrome - Browser used to operate the Odoo web purchasing workspace
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Applications used: app 3
+LibreOffice Writer - Word processor — service-record editing and the load-bearing Fields-dialog hand-off
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Applications used: app 4
+PDF viewer - Views the signed repair release and the three staged supervisor addenda
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Applications used: app 5
+LibreOffice Calc - Views the signed and superseded bench-stock CSV exports
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+Unsuitable Apps rationale
+If any of the above listed applications are unnecessary and/or not appropriate for the task, list them here and explain why they are not suited to the task.
+
+Use the following format, or "n/a" if all apps are suitable:
+
+App used - Role: Your Explanation
+
+e.g. Google Chrome - Wikipedia: this app is not considered a valid source of data. The task does require a citation but it should reference a reputable source like PubMed.
+
+Input field text
+Required Files
+In the project guidelines, navigate to the File Explorer tab. Select the Task ID for this task (hint: you can find the ID under the Domain section at the top of the left-hand panel here). Open each file in the viewer and review it carefully. In this section, you will use your industry experience to assess whether each file is applicable and appropriate to the task described.
+
+First, please confirm: are you able to view all of the required files? Then assess each file individually below.
+
+
+
+Yes
+
+
+No
+Required Files Usability Issues
+Specify which files cannot be opened or used, and describe any errors, wrong formats, or missing extensions.
+
+Input field text
+
+Files used: file 1
+P188_repair_release.pdf
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 2
+bench_stock_2026-07-22_SIGNED.csv
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 3
+P188_pattern_service_record.odt
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 4
+RR-2026-0188-ADD1_supervisor_revision.pdf
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 5
+RR-2026-0188-ADD2_supervisor_revision.pdf
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 6
+RR-2026-0188-ADD3_supervisor_revision.pdf
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+Unsuitable Files rationale
+If any of the above listed files are unnecessary and/or not appropriate for the task, list them here and explain why they are not suited to the task. Use the following format, or "n/a" if all files are suitable:
+
+FIle name: Your Explanation for its unsuitability.
+
+Input field text
+Deliverable Feasibility
+Could a professional in this field complete the requested deliverable correctly using only the provided task instructions, files, and applications (including known distractors)?
+
+
+
+Yes
+
+
+No
+Deliverable Feasibility Rationale
+What blocks completion—missing information, wrong/insufficient apps, unusable files, conflicting requirements, or an unclear end state?
+
+Input field text
+Reference Solution Path
+If you followed the proposed Reference Solution Path with the listed Task Instructions, Apps Used, and Required Files, could you reach the correct, complete deliverable?
+
+
+
+Yes
+
+
+No
+Reference Solution Path Rationale
+Which step of the Reference Solution Path fails and why (missing file, wrong app, impossible check, conflicting requirement)?
