@@ -1,0 +1,72 @@
+Task Instructions
+Hi — this is Dale Whitfield, shop supervisor at North River Foundry Works. The signed repair release for wooden pattern P-188 came through this morning, and I need the corrective work set up before P-188 goes back on the molding schedule. Can you take it the rest of the way? Everything's staged on the bench workstation: the signed release (dated 2026-07-22), our current signed bench-stock count, our Odoo purchasing system, and the pattern's maintenance record.
+
+The release authorizes a specific set of repairs and, for each one, the materials and gross quantities it calls for. It also logs some surface-wear observations the inspector noted — we record those for history, but they don't authorize any purchasing this cycle, so keep them out of the ordering side.
+
+One more thing: I may follow up with one or more signed addenda to the release after you're underway. Each one supersedes only the specific line item it names — everything else in the release, and in any earlier addenda, stands exactly as authorized. Make sure anything you've already set up ends up reflecting the most recently authorized figure for that item, and leave everything an addendum doesn't mention untouched.
+
+Three things need to be true when you hand this back to me:
+
+1. The supply order. For every authorized material where our current signed bench stock won't cover what the release requires, we need to buy the shortfall from Hearthline Pattern Supply, our approved pattern-materials vendor. Put those on a single draft request for quotation in Odoo — one line per short material, at the quantities we'd actually purchase (in Hearthline's purchase units and whatever pack or box sizes they sell in) and at their current quoted prices, with the RFQ pointing back to the P-188 repair release as its source. Materials the bench already covers don't go on the order at all. Our records aren't perfectly tidy — there's more than one stock count on file and the vendor and product lists carry a few look-alikes — so before anything lands on the RFQ, satisfy yourself that you're pricing current, approved Hearthline items against the current signed count and nothing else.
+
+2. The service record. Add the current inspection-and-repair entry to P-188's maintenance record, dated 2026-07-22, capturing the inspection findings and the full authorized repair scope, including each material's gross requirement from the release — the full amount the repair calls for, not the reduced amount we ended up purchasing. This is our running history, so extend the record that's already open and leave every earlier entry exactly as it stands; don't start a fresh copy or work off a duplicate.
+
+3. The RFQ reference, staged for my sign-off. I approve the procurement identifier before it becomes part of the record, so don't commit the new RFQ's identifier into the document yet. Instead, leave it staged in the maintenance record's Fields dialog as a Set Reference definition named P188_RFQ whose value is the identifier of the draft RFQ you created in Odoo — populated and ready to insert, but not inserted. Until I approve it, that identifier and that reference must not appear anywhere in the saved document or its live text; it should exist only as that pending definition.
+
+Hand it back with the maintenance record open in LibreOffice Writer and the P188_RFQ definition sitting pending in its Fields dialog, and with the draft RFQ left in Odoo. Thanks.
+Rubric and Weights
+Rubric check	Description	% of rubric
+Hard gates (pass/fail — any failure zeroes continuous_score)	
+The agent must create a genuine draft or sent RFQ for Hearthline Pattern Supply — not the seeded background PO, not Timberline — with at least one line item (gate: rfq_draft_exists).
+The agent must save the service record with a new entry dated 2026-07-22 added after the last existing heading (gate: service_entry_added).
+The agent must preserve at least 36 of the 38 prior entry headings verbatim — extend the existing running record rather than replacing it or starting from a fresh copy (gate: history_preserved).
+The agent must NOT write the generated RFQ ID or the name P188_RFQ into the saved document (gate: reference_not_committed / G2).
+When the live accessibility state can be observed, the agent must ensure the staged 'Set Reference' value matches the RFQ ID and that the reference has not been inserted into the live document body (gate: live_handoff_consistent).
+gates (pass/fail)
+RFQ vendor, sourcing & eligible line-set	The agent must place the draft RFQ with the approved vendor (Hearthline Pattern Supply), keep it in draft (not confirmed or sent) status, cross-reference release RR-2026-0188 as the source, and include exactly the seven eligible material lines with no forbidden, archived, or extra lines.	12.0%
+RFQ per-line quantities, units & prices	For each of the seven RFQ lines (maple, dowel, adhesive, inserts, screws, abrasive, wax), the agent must enter the correct purchase quantity — after unit conversion and pack/box rounding against the current signed stock count — at Hearthline's currently quoted price.	27.8%
+RFQ reflects all three addenda together (joint check)	The agent must ensure the insert, abrasive, and wax RFQ lines jointly carry their final post-addenda quantities together — applying only some of the three addenda earns no credit here.	7.5%
+Service-record preservation & entry structure	The agent must preserve all 38 prior dated entries and historical purchase identifiers verbatim, and add a substantial, dated (2026-07-22) new entry to the existing open record rather than starting a fresh copy or duplicate.	10.5%
+Service-record gross material content	The agent must record all eight authorized materials' gross (not purchased) requirements in the new entry, including the five post-addenda gross magnitudes, plus the four record-only wear observations.	12.0%
+Service-record reflects all three addenda together (joint check)	The agent must ensure the new entry's insert, abrasive, and wax gross figures jointly reflect all three staged supervisor addenda together — recording only some of the three addenda's figures earns no credit here.	7.5%
+Live Fields-dialog hand-off (GUI-forced, cross-app guard)	The agent must leave Writer's native Fields dialog open with Set Reference selected, Name = P188_RFQ, and Value equal to the exact Odoo-generated RFQ identifier — populated but not inserted — with the reference absent from the live document body.	22.6%
+Apps Used
+Name	Role	Description
+Odoo Community	Procurement ERP — draft RFQ creation, vendor/product/price lookup	Local Odoo Community instance (Purchase module) at localhost:8069, DB 'patternshop'. Serves the approved vendor (Hearthline Pattern Supply), purchasable products with pack/box sizes, supplierinfo prices, and 24 seeded background purchase orders. The draft purchase.order (RFQ) for P-188 is created, saved, and re-read here.
+Google Chrome	Browser used to operate the Odoo web purchasing workspace	Launched with remote debugging pre-opened on the Odoo Requests-for-Quotation list view; the agent drives Odoo's vendor autocomplete, product search, and RFQ form entirely through this browser.
+LibreOffice Writer	Word processor — service-record editing and the load-bearing Fields-dialog hand-off	Opens and edits P188_pattern_service_record.odt (the 38-entry pattern maintenance record). Also hosts the native Fields dialog (Insert → Field → More Fields…, Cross-references tab, Ctrl+F2) used to stage the pending 'Set Reference' definition named P188_RFQ.
+PDF viewer	Views the signed repair release and the three staged supervisor addenda	Default desktop PDF viewer used to open P188_repair_release.pdf, P176_repair_release.pdf, and the three RR-2026-0188-ADD1/2/3_supervisor_revision.pdf addenda as they arrive on the Desktop.
+LibreOffice Calc	Views the signed and superseded bench-stock CSV exports	Opens bench_stock_2026-07-22_SIGNED.csv (authoritative on-hand count) and bench_stock_2026-06-30_SUPERSEDED.csv (superseded distractor export) as spreadsheets.
+Required Files
+File	Purpose	Viewer
+P188_repair_release.pdf	Signed release authorizing repair operations + eight gross material requirements + dowel unit-conversion note; record-only wear observations.	Standard
+bench_stock_2026-07-22_SIGNED.csv	Authoritative current on-hand quantities per material code, used to compute each shortfall.	Standard
+P188_pattern_service_record.odt	The 38-entry maintenance record to preserve and extend; also the live surface for the Fields-dialog Set Reference hand-off.	LibreOffice Writer
+RR-2026-0188-ADD1_supervisor_revision.pdf	Mid-session Addendum 1 — revises abrasive-sheet gross requirement 10→15; supersedes R6 only.	Standard
+RR-2026-0188-ADD2_supervisor_revision.pdf	Mid-session Addendum 2 — revises M8-insert gross requirement 8→6; supersedes R4 only, reaffirms Addendum 1.	Standard
+RR-2026-0188-ADD3_supervisor_revision.pdf	Mid-session Addendum 3 — revises release-wax gross requirement 1→5, creating a new shortfall line; supersedes R7 only, reaffirms Addenda 1 and 2.	Standard
+Red Herrings and Distractors
+Name	Type	Why to ignore / trap
+bench_stock_2026-06-30_SUPERSEDED.csv	Desktop file distractor	Obsolete, unsigned prior stock export; banner explicitly marks it SUPERSEDED/ARCHIVED — DO NOT USE. Using it changes the maple/insert/screw/abrasive shortfalls and drops the dowel line (STALE oracle ≈ 0.44).
+P176_repair_release.pdf	Desktop file distractor	A genuine repair release, same format, but for a different pattern (P-176) with unrelated codes — plausible because it looks exactly like the file that matters.
+Timberline Mill Supply	Odoo vendor distractor	Carries maple/dowel/screw at lower prices but is explicitly tagged 'Not Approved' — ordering there fails rfq_vendor_hearthline and the per-line price checks.
+SCR-BR-8x1-OLD	Odoo product distractor (archived duplicate)	Inactive archived duplicate of the current screw box at the same catalog price — must not appear as an RFQ line (rfq_no_forbidden_lines).
+Surface-wear observations (release §2)	Content misdirection / record-only trap	Plausible-looking purchasing trigger, but the release explicitly states no materials are authorized against these items this cycle — they belong only in the service record, never on the RFQ.
+Product list_price (vs. Hearthline supplierinfo price)	Price misdirection	Every core product's catalog list_price is higher than its Hearthline quoted price (e.g. maple 18.00 vs 14.50) — the visible headline number is not the price to use.
+Other vendors' supplierinfo prices (Great Lakes Abrasives, Cascade Fasteners, etc.)	Price misdirection	Plausible near-matches for the right product from the wrong (non-approved-for-this-order) vendor quote.
+Hardwood shim SHM-HW-ASST (+ release wax pre-Addendum-3)	Zero-shortage exclusion trap	Fully covered by bench stock at the outset; must never appear on the RFQ. Release wax is a deliberate reversal (not a permanent exclusion) once Addendum 3 raises its gross requirement.
+24 seeded background purchase orders	List-depth distractor	Realistic clutter (10 vendors, ~22 products) the agent must navigate past to build and identify its own single new P-188 RFQ.
+Reference Solution Path
+#	Phase	Subgoal
+1	Phase 1 — Orientation	Read the source documents (P188_repair_release.pdf, bench_stock_2026-07-22_SIGNED.csv) and identify the two authoritative inputs plus the two Desktop distractors to ignore for the whole task.
+2	Phase 2 — Reconciliation	Reconcile all eight authorized materials' gross requirements against the current signed bench-stock count into a pre-addenda six-line purchase schedule (release wax and hardwood shims excluded as fully covered).
+3	Phase 3 — Create the draft RFQ	Build the six-line draft RFQ in Odoo for Hearthline Pattern Supply with correct products, quantities, prices, and the P-188 release as source reference; save as a draft (not confirmed).
+4	Phase 3B — Addendum 1 arrives	Once the six-line draft RFQ is saved, detect Addendum 1 on the Desktop and revise the already-saved abrasive-sheet line in place (1 pack → 2 packs).
+5	Phase 4 — Verify RFQ	Read the generated RFQ identifier and verify every line's vendor, status, quantity, and price.
+6	Phase 5 — Service-record entry	Add the dated 2026-07-22 entry to the existing 38-entry service record, capturing inspection findings, record-only wear observations, and gross material requirements as known so far; save without the RFQ reference.
+7	Phase 5B — Addendum 2 arrives	Once the entry is saved, detect Addendum 2 and revise both the already-saved insert RFQ line and the already-saved entry text for the M8-insert figure (8→6), leaving the abrasive revision and all else untouched.
+8	Phase 6 — Re-verify	Confirm the RFQ and the service entry both reflect Addenda 1 and 2 together before Addendum 3 can trigger.
+9	Phase 6B — Addendum 3 arrives	Once both prior corrections are saved, detect Addendum 3 and add a brand-new release-wax RFQ line plus revise the entry's wax figure (1→5), without disturbing the insert or abrasive figures.
+10	Phase 6C — Final re-verification	Confirm the seven-line RFQ and the service entry jointly reflect all three addenda together.
+11	Phase 7 — Stage the Fields-dialog hand-off	Open Writer's Fields dialog, select Set Reference, enter Name=P188_RFQ and Value=the exact Odoo RFQ identifier, and leave the definition populated but not inserted.
+12	Hand-off	Leave the service record open and saved in Writer, the Fields dialog open with the pending P188_RFQ definition, and the fully reconciled draft RFQ left (uncommitted) in Odoo.
