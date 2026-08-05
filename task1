@@ -70,3 +70,382 @@ Reference Solution Path
 10	Phase 6C — Final re-verification	Confirm the seven-line RFQ and the service entry jointly reflect all three addenda together.
 11	Phase 7 — Stage the Fields-dialog hand-off	Open Writer's Fields dialog, select Set Reference, enter Name=P188_RFQ and Value=the exact Odoo RFQ identifier, and leave the definition populated but not inserted.
 12	Hand-off	Leave the service record open and saved in Writer, the Fields dialog open with the pending P188_RFQ definition, and the fully reconciled draft RFQ left (uncommitted) in Odoo.
+
+Questions to answer
+All form questions are required unless marked as optional.
+
+Section 1: Task Instructions
+
+Section Goal: Evaluate whether the instructions, workflow, and requested deliverable are clear, logical, and feasible.
+
+Task Instructions Realism
+Are the Task Instructions realistic for a professional in the listed domain?
+Pease skip the task and inform a Snorkel admin if you are not familiar with the listed domain/sector.
+
+
+
+Yes
+
+
+No
+Goal & Context Clarity
+Do the Task Instructions clearly state the goal and enough context to begin, without requiring unstated assumptions?
+
+
+
+Yes
+
+
+No
+Procedure in Task Instructions
+Do the Task Instructions prescribe a step-by-step procedure?
+
+
+
+Yes
+
+
+No
+Correct Deliverable Definition
+Based on the Task Instructions alone, is it clear what a completed deliverable would be for this task?
+
+
+
+Yes
+
+
+No
+Deliverable Definition Rationale
+In the text box below, briefly state what the completed deliverable for this task is (what must exist or change when the task is finished).
+
+Input field text
+Instruction Quality
+Rate the quality of the task instructions as though you received this request from a colleague. (Refer to the Rating Task Quality in guidelines)
+
+
+
+5 - Excellent
+
+
+
+4 - Good
+
+
+
+3 - Fair
+
+
+
+2 - Poor
+
+
+
+1 - Invalid / Does Not Make Sense
+
+Next section
+
+Section 2: Rubrics and Weights
+
+Section Goal: Verify that the golden solution and evaluation rubric accurately assess task completion.
+
+Rubric Weightings
+The rubric can be found in the Rubric and Weights table within the task. It lists rubric categories with descriptions and % weights. Do you agree with the relative weightings presented there? That is, in your assessment, do these relative weightings correctly reflect the relative importance of each category to the task?
+
+
+
+Yes
+
+
+No
+Unnecessary and Missing Rubric Categories
+Are any listed rubric categories unnecessary for judging successful completion, or are any important parts of successful task completion missing from the rubric?
+
+
+
+No changes needed
+
+
+
+Remove only
+
+
+
+Add only
+
+
+
+Both remove and add
+
+Unnecessary and Missing Rubric Category Rationale
+Which categories should be removed or added, and why?
+
+Input field text
+Rubric Category Structure
+Should any rubric categories be split or merged so that scoring better matches how the work is actually done?
+
+
+
+Yes
+
+
+No
+Rubric Category Descriptions
+Are the rubric category descriptions clear and specific enough to understand what successful completion looks like for each category?
+
+
+
+Yes
+
+
+No
+Rubric ↔ Task Instructions Alignment
+Does the set of rubric categories match what the Task Instructions ask the agent to produce or accomplish?
+
+
+
+Yes
+
+
+No
+
+Previous section
+Next section
+
+Section 3: Resources for Completion
+
+Section Goal: Verify that the task includes the appropriate domain, applications, files, and other resources needed for successful completion.
+
+Applications & Tools
+Are the listed applications suitable and sufficient for completing the deliverable? Answer "No" if any necessary applications are missing from the list. Following this, for each application you will assess whether it is appropriate and required for the task.
+
+
+
+Yes
+
+
+No
+
+Applications used: app 1
+Odoo Community - Procurement ERP — draft RFQ creation, vendor/product/price lookup
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Applications used: app 2
+Google Chrome - Browser used to operate the Odoo web purchasing workspace
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Applications used: app 3
+LibreOffice Writer - Word processor — service-record editing and the load-bearing Fields-dialog hand-off
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Applications used: app 4
+PDF viewer - Views the signed repair release and the three staged supervisor addenda
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Applications used: app 5
+LibreOffice Calc - Views the signed and superseded bench-stock CSV exports
+App suitability
+Is this app both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+Unsuitable Apps rationale
+If any of the above listed applications are unnecessary and/or not appropriate for the task, list them here and explain why they are not suited to the task.
+
+Use the following format, or "n/a" if all apps are suitable:
+
+App used - Role: Your Explanation
+
+e.g. Google Chrome - Wikipedia: this app is not considered a valid source of data. The task does require a citation but it should reference a reputable source like PubMed.
+
+Input field text
+Required Files
+In the project guidelines, navigate to the File Explorer tab. Select the Task ID for this task (hint: you can find the ID under the Domain section at the top of the left-hand panel here). Open each file in the viewer and review it carefully. In this section, you will use your industry experience to assess whether each file is applicable and appropriate to the task described.
+
+First, please confirm: are you able to view all of the required files? Then assess each file individually below.
+
+
+
+Yes
+
+
+No
+
+Files used: file 1
+P188_repair_release.pdf
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 2
+bench_stock_2026-07-22_SIGNED.csv
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 3
+P188_pattern_service_record.odt
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 4
+RR-2026-0188-ADD1_supervisor_revision.pdf
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 5
+RR-2026-0188-ADD2_supervisor_revision.pdf
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+
+Files used: file 6
+RR-2026-0188-ADD3_supervisor_revision.pdf
+File suitability
+Is this file both necessary and appropriate for the task?
+
+
+
+Yes
+
+
+No
+Unsuitable Files rationale
+If any of the above listed files are unnecessary and/or not appropriate for the task, list them here and explain why they are not suited to the task. Use the following format, or "n/a" if all files are suitable:
+
+FIle name: Your Explanation for its unsuitability.
+
+Input field text
+Deliverable Feasibility
+Could a professional in this field complete the requested deliverable correctly using only the provided task instructions, files, and applications (including known distractors)?
+
+
+
+Yes
+
+
+No
+Reference Solution Path
+If you followed the proposed Reference Solution Path with the listed Task Instructions, Apps Used, and Required Files, could you reach the correct, complete deliverable?
+
+
+
+Yes
+
+
+No
+
+Previous section
+Next section
+
+Section 4: Overall Assessment
+
+Section Goal: Provide an expert assessment of the task's quality, realism, and expected level of effort.
+
+Task Validity
+After assessing the task, would you consider the task valid or invalid?
+
+Approach this question as a gatekeeper, not a grader. You are not scoring the task's overall quality, you are deciding whether it's ready to be used as-is. A task can have room for improvement and still be Valid. A task can look polished and still be Invalid if one unresolved issue makes the deliverable impossible to produce or impossible to verify.
+
+Ask yourself: If I were handed this exact package; instructions, files, applications, rubric, could I sit down and produce the deliverable right now, with no clarifying questions and no missing pieces?
+
+
+
+Valid - Every dependency is present and working. The deliverable is unambiguous. Nothing in the instructions, files, or rubric would make a competent professional stop and ask "wait, what do they actually want?"
+
+
+
+Invalid - Any blocking issue exists. Examples include a required file won't open or doesn't contain what it claims, the deliverable can't be pinned down, the instructions contradict each other, or a needed application/resource is missing.
+
+Estimated Completion Time
+Approximately how long (minutes) would it take a professional in this field to complete this task from start to completion?
+
+Estimated Difficulty
+How would a mid-level professional in the field rate the difficulty of the task assuming no access to LLMs?
+
+
+
+5 — Very Difficult
+
+
+
+4 — Difficult
+
+
+
+3 — Average Difficulty
+
+
+
+2 — Easy
+
+
+
+1 — Very Easy
